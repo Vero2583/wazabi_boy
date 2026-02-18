@@ -42,10 +42,10 @@ export const create = async (req, res) => {
 
 // recuperer un contact par son id 
 
-export const getProfByData = async (req, res) => {
+export const getProfById = async (req, res) => {
   try {
-    const { data } = req.body;
-    const contact = await getProfByData(data);
+    const { id } = req.params;
+    const contact = await getProfById(id);
 
     if (!contact) {
       return res.status(400).json({ message: "aucun contact trouvé " });
@@ -64,12 +64,13 @@ export const getProfByData = async (req, res) => {
 
 // Modifier le contact
 
-export const updateProfByData = async (req, res) => {
+export const updateProfById = async (req, res) => {
   try {
     
+    const { id } = req.params;
     const { titre, competences, experiences_professionnelles, diplomes, langues} = req.body;
 
-    if (!titre) {
+    if (!titre, competences, experiences_professionnelles, diplomes, langues) {
       return res.status(400).json({ message: "aucun professionnel trouvé " });
     }
 
@@ -78,7 +79,7 @@ export const updateProfByData = async (req, res) => {
       return res.status(400).json({ message: error.details[0].message });
     }
 
-    const affectRows = await updateProfByData(titre, competences, experiences_professionnelles, diplomes, langues);
+    const affectRows = await updateProfById(id, titre, competences, experiences_professionnelles, diplomes, langues);
 
     if (affectRows) {
       return res.status(404).json({ message: "aucun professionnel trouvé " });
@@ -98,10 +99,10 @@ export const updateProfByData = async (req, res) => {
 
 // Suppprimer une categorie
 
-export const deleteByData = async (req, res) => {
+export const deleteById = async (req, res) => {
   try {
 
-    const { data } = req.body;
+    const { id } = req.params;
     const affectRows = await deleteByData(data);
 
 

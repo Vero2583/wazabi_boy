@@ -42,10 +42,10 @@ export const create = async (req, res) => {
 
 // recuperer un contact par son id 
 
-export const getContactByData = async (req, res) => {
+export const getContactById = async (req, res) => {
   try {
-    const { data } = req.params;
-    const contact = await getContactByData(data);
+    const { id } = req.params;
+    const contact = await getContactById(id);
 
     if (!contact) {
       return res.status(400).json({ message: "Aucun contact trouvé " });
@@ -64,12 +64,13 @@ export const getContactByData = async (req, res) => {
 
 // Modifier le contact
 
-export const updateContactByData = async (req, res) => {
+export const updateContactById = async (req, res) => {
   try {
     
+    const { id } = req.params;
     const { name, prenom, adresse, telephonne, email, reseaux, loisirs, id_professionnel } = req.body;
 
-    if (!name) {
+    if (!name, prenom, adresse, telephonne, email, reseaux, loisirs, id_professionnel) {
       return res.status(400).json({ message: "aucun contact trouvé " });
     }
 
@@ -78,7 +79,7 @@ export const updateContactByData = async (req, res) => {
       return res.status(400).json({ message: error.details[0].message });
     }
 
-    const affectRows = await updateContactByData( name, prenom, adresse, telephonne, email, reseaux, loisirs, id_professionnel);
+    const affectRows = await updateContactById( id, name, prenom, adresse, telephonne, email, reseaux, loisirs, id_professionnel);
 
     if (affectRows) {
       return res.status(404).json({ message: "Aucun contact trouvé " });
@@ -98,11 +99,11 @@ export const updateContactByData = async (req, res) => {
 
 // Suppprimer une categorie
 
-export const deleteByData = async (req, res) => {
+export const deleteById = async (req, res) => {
   try {
 
-    const { data } = req.body;
-    const affectRows = await deleteByData(data);
+    const { id } = req.params;
+    const affectRows = await deleteById(id);
 
 
     if (affectRows) {
